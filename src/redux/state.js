@@ -7,7 +7,7 @@ let store = {
           {id: 3, message: 'Мапим массив с постами', likesCount: 13222}  
         ],
         
-      newPostText: 'boshik64'
+      newPostText: 'Теперь я могу добавить пост из textarea'
     } ,
 
     dialogsPage: {
