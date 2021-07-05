@@ -2,22 +2,30 @@ import React from 'react';
 import classes from  './MyPosts.module.css';
 import Post from './Post/Post';
 
-const MyPosts = () => {
+const MyPosts = (props) => {
 
-  let postsData = [
-    {id: 1, message: 'Пробую пропсы', likesCount: 23},
-    {id: 2, message: 'Пробую выносить данные в массив', likesCount: 1322}   
-  ]
+  
+  let newPostElement = React.createRef ();
+
+  let addPost = () => {
+    props.addPost();
+  }
+
+  let postOnChange = () => {
+    let text = newPostElement.current.value;
+    props.updateNewPostText(text);
+  }
+
+  let postsElements = props.postsData.map ( post => <Post message={post.message} likes={post.likesCount} /> )
 
     return (
       <div>
         MyPosts
         <div>
-          <textarea>New Post</textarea>
-          <button>Send</button>
+          <textarea onChange={postOnChange} ref={newPostElement} value={props.newPostText} />
+          <button onClick={addPost}>Send</button>
         </div>
-        <Post message={postsData[0].message} likes={postsData[0].likesCount} />
-        <Post message={postsData[1].message} likes={postsData[1].likesCount} />
+        {postsElements}
       </div>
     
     )
