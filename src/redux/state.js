@@ -1,3 +1,8 @@
+import dialogsReducer from "./dialogs-reducer";
+import profileReducer from "./profile-reducer";
+
+
+
 let store = {
   _state: {
     profilePage: {
@@ -7,7 +12,7 @@ let store = {
           {id: 3, message: 'Мапим массив с постами', likesCount: 13222}  
         ],
         
-      newPostText: 'Теперь я могу добавить пост из textarea'
+      newPostText: ''
     } ,
 
     dialogsPage: {
@@ -21,7 +26,9 @@ let store = {
           {id: 1, message: 'Hi'},
           {id: 2, message: 'как дела?'},
           {id: 3, message: 'верстаем диалоги'}
-        ]
+        ] ,
+
+      newMessageBody: ""
     }
 
   },
@@ -35,26 +42,14 @@ let store = {
   subscribe (observer) {
     this._callsubscriber = observer;
   },
-
-  addPost() {
-    let newPost = {
-      id: 5,
-      message: this._state.profilePage.newPostText,
-      likesCount: 666
-    };
-    this._state.profilePage.postsData.push(newPost);
-    this._state.profilePage.newPostText = '';
-    this._callsubscriber (this._state);
-  },
-  updateNewPostText (newText) {
-    this._state.profilePage.newPostText = newText ;
-    this._callsubscriber (this._state);
-  },
   dispatch(action){
-    
+
+    this._state.profilePage = profileReducer(this._state.profilePage, action);
+    this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action);
+
+    this._callsubscriber(this._state);
   }
 }
-
 
   export default store;
   window.store=store;
